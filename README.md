@@ -1,3 +1,7 @@
+Polymorphic-Endpoint-Mutation is a defensive API gateway project that dynamically changes externally visible REST API endpoints using time-synchronized HMAC-SHA256 tokens. It uses a TypeScript client SDK to generate dynamic API paths and a Go-based API Gateway to validate tokens, reject invalid requests, and forward valid requests to a Node.js backend. The system is demonstrated through a real-time event booking application while keeping the original backend routes and business logic unchanged. This approach adds an extra layer of API endpoint obfuscation based on the Moving Target Defense concept.
+
+
+
 <<<<<<< HEAD
 # Polymorphic Endpoint Mutation Gateway
 
