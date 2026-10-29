@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Polymorphic Endpoint Mutation Gateway
 
 A runnable capstone implementation of time-synchronized API route mutation: a Go reverse proxy, a TypeScript fetch SDK, an Encore event-booking website, and a persistent Node.js booking API. No third-party runtime dependencies. See [DEMO-GUIDE.md](DEMO-GUIDE.md) for the client/server presentation walkthrough.
@@ -95,3 +96,6 @@ Route mutation is supplemental obfuscation. A browser-held seed is extractable, 
 Synchronize clocks (for example using NTP). Clients ahead of the gateway can fail near rollover; the SDK's injectable clock supports a trusted application-provided offset. Seed rotation must be coordinated with clients. Route tokens can appear in proxy logs, so avoid logging full tokenized paths.
 
 Rejected requests cause no backend invocation, but still consume gateway/network resources. Microsecond latency and DDoS prevention are not established claims; measure latency and load in your deployment. This project includes correctness tests, not production load benchmarks.
+=======
+# Polymorphic-Endpoint-Mutation
+>>>>>>> e8cad70e5fa19d658841e1023568087f22fd1ff0
