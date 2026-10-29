@@ -1,0 +1,7 @@
+{
+  "name": "polymorphic-api-gateway",
+  "private": true,
+  "type": "module",
+  "scripts": { "test": "node --test tests/*.test.ts", "backend": "node mock-backend/server.js" },
+  "engines": { "node": ">=24" }
+}

@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>Flux — Endpoint Mutation Lab</title>
+  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="/server-monitor.css">
+  <script type="module" src="/app.js"></script>
+  <script type="module" src="/server-monitor.js"></script>
+</head>
+<body>
+  <aside class="sidebar">
+    <a class="brand" href="#overview" aria-label="Flux home"><span class="brand-mark">f<span>↗</span></span>flux<span class="brand-dot">.</span></a>
+    <div class="workspace"><span class="workspace-icon">◈</span><div>Endpoint Mutation Lab<small>Local development workspace</small></div></div>
+    <span class="nav-label">WORKSPACE</span>
+    <nav aria-label="Main navigation">
+      <a class="active" href="#overview"><span>▦</span> Live monitor <kbd>01</kbd></a>
+      <a href="#activity"><span>↔</span> Request activity <kbd>02</kbd></a>
+      <a href="#how-it-works"><span>◎</span> How it works <kbd>03</kbd></a>
+      <a href="/client/" target="_blank" rel="noopener"><span>↗</span> Live client website</a>
+    </nav>
+    <div class="sidebar-note"><span class="mini-orbit">↻</span><strong>Same API. Moving address.</strong><p>Watch time-based routes change while your application stays right where it is.</p><a href="#how-it-works">Explore the architecture <span>↗</span></a></div>
+    <div class="sidebar-footer"><span class="avatar">L</span><div>Local demo<small>Go gateway · Node backend</small></div><span class="status-dot"></span></div>
+  </aside>
+  <main id="overview">
+    <header class="topbar"><div><span class="breadcrumb">Workspace</span><span class="slash">/</span>Live monitor</div><div class="connection" id="connection"><span class="status-dot"></span><span id="connection-text">Connecting…</span></div></header>
+    <div class="page">
+      <section class="page-heading"><div><div class="eyebrow"><span></span> A MOVING TARGET, MADE VISIBLE</div><h1>Every request. Both sides.</h1><p>Observe the client, gateway, and server in real time. All actions happen on the client website.</p></div><a class="button secondary guide-link" href="#how-it-works">How it works <span>↗</span></a></section>
+      <div class="demo-banner"><span class="banner-icon">◉</span><p><strong>A real pipeline, in a safe local lab.</strong> Every test hits your running Go gateway. Tokens are exposed here for learning.</p><span class="pill neutral">DEMO MODE</span></div>
+      <section class="server-monitor" aria-labelledby="server-title"><div class="server-heading"><div><span class="section-number">LIVE API SERVER / EVENT RESERVATIONS</span><h2 id="server-title">Watch the other side of the request.</h2><p>Browse Encore, select seats, and confirm a demo reservation. Watch client requests reach the backend through rotating routes.</p></div><a class="button primary" href="/client/" target="_blank" rel="noopener">Open client website ↗</a></div><div class="server-stats"><div><small>SERVER HEALTH</small><strong id="server-health">Connecting…</strong></div><div><small>UPTIME</small><strong id="server-uptime">—</strong></div><div><small>API REQUESTS / ERRORS</small><strong id="server-requests">—</strong></div><div><small>BOOKINGS / DISK WRITES</small><strong id="server-writes">—</strong></div></div><div class="server-bottom"><label><input id="follow-client" type="checkbox" checked> Follow client requests in the journey below</label><span id="server-memory">Waiting for server metrics</span></div><details><summary>View the API server’s own request log</summary><div class="server-log-wrap"><table><thead><tr><th>TIME</th><th>METHOD</th><th>PATH RECEIVED BY SERVER</th><th>STATUS</th></tr></thead><tbody id="server-log"></tbody></table></div><p class="server-note">Health checks are excluded from API counts. These paths come from the backend process itself.</p></details></section>
+      <section class="stats" aria-label="Session statistics">
+        <article><span>Total requests <span class="stat-icon">↗</span></span><div id="stat-total">0</div><small>Recorded by the gateway</small></article>
+        <article><span>Forwarded <span class="stat-icon green">✓</span></span><div id="stat-forwarded">0</div><small><i class="dot green-bg"></i> Passed route validation</small></article>
+        <article><span>Blocked at gateway <span class="stat-icon red">⊘</span></span><div id="stat-blocked">0</div><small><i class="dot red-bg"></i> No backend invocation</small></article>
+        <article><span>Backend responses <span class="stat-icon">⇄</span></span><div id="stat-backend">0</div><small>Confirmed upstream replies</small></article>
+      </section>
+      <div class="lab-grid">
+        <div class="right-column">
+          <section class="token-card" aria-label="Live token rotation">
+            <div class="token-top"><span><i class="dot mint-bg"></i> LIVE ROUTE MUTATION</span><span id="window-label">30-second window</span></div>
+            <div class="token-main"><div><span class="token-caption">CURRENT TOKEN</span><div class="token-value" id="current-token">••••••••</div></div><div class="countdown"><strong id="countdown">—</strong><span>until rotation</span></div></div>
+            <progress id="rotation-progress" max="100" value="0" aria-label="Time remaining in current window"></progress>
+            <div class="token-bottom"><div><span>Previous token</span><code id="previous-token">—</code><span class="grace-tag">still accepted</span></div><span id="interval-label">Window —</span></div>
+          </section>
+          <section class="card journey" aria-labelledby="journey-title">
+            <div class="card-heading"><div><span class="section-number">02 / LIVE REQUEST JOURNEY</span><h2 id="journey-title">Under the hood</h2></div><span class="pill neutral" id="journey-status">AWAITING REQUEST</span></div>
+            <div class="pipeline" id="pipeline">
+              <div class="stage" id="stage-client"><span class="stage-symbol">⌘</span><strong>Client</strong><small id="client-detail">Builds a dynamic URL</small></div>
+              <div class="connector" id="connector-one"><span>→</span></div>
+              <div class="stage" id="stage-gateway"><span class="stage-symbol">◇</span><strong>Go gateway</strong><small id="gateway-detail">Checks the route token</small></div>
+              <div class="connector" id="connector-two"><span>→</span></div>
+              <div class="stage" id="stage-backend"><span class="stage-symbol">▤</span><strong>Backend</strong><small id="backend-detail">Receives the clean path</small></div>
+            </div>
+            <div class="journey-explanation" id="journey-explanation">Your next request will appear here. Every stage reflects the gateway’s recorded result.</div>
+            <dl class="trace-details"><div><dt>Received by gateway</dt><dd id="trace-incoming">—</dd></div><div><dt>Forwarded to backend</dt><dd id="trace-forwarded">—</dd></div></dl>
+          </section>
+          <section class="card response-card" aria-labelledby="response-title"><div class="response-heading"><div class="response-tabs" role="tablist" aria-label="Response inspector"><button id="tab-response" class="selected" role="tab" aria-selected="true" aria-controls="response-panel">Response body</button><button id="tab-trace" role="tab" aria-selected="false" aria-controls="response-panel">Gateway trace</button></div><div class="response-actions"><span id="response-meta">No request yet</span><button class="text-button" id="copy" aria-label="Copy inspector content">Copy</button></div></div><div id="response-panel" role="tabpanel" aria-labelledby="tab-response"><pre id="response-body">// Make a request from the client website.
+// Its server-recorded response will appear here.</pre></div></section>
+        </div>
+      </div>
+      <section class="card activity" id="activity" aria-labelledby="activity-title"><div class="card-heading"><div><span class="section-number">03 / SERVER-RECORDED ACTIVITY</span><h2 id="activity-title">Every request tells a story.</h2></div><div class="activity-tools"><label for="filter" class="sr-only">Filter requests</label><select id="filter"><option value="all">All requests</option><option value="forwarded">Forwarded</option><option value="blocked">Blocked</option></select><button class="button secondary" id="export">↓ Export JSON</button></div></div><div class="table-wrap"><table><thead><tr><th>TIME</th><th>REQUEST PATH</th><th>RESULT</th><th>BACKEND</th><th>GATEWAY TIME</th><th></th></tr></thead><tbody id="activity-rows"></tbody></table></div><div class="empty-state" id="activity-empty"><span>↔</span><strong>A clear view of every request</strong><p>Open the client website. Its live activity will appear here.</p></div><div class="table-footer"><span id="activity-count">0 requests in this session</span><span>Latest 100 retained · select a row to inspect</span></div></section>
+      <section class="learn" id="how-it-works"><div class="learn-heading"><div class="eyebrow">THE IDEA BEHIND THE MOTION</div><h2>A changing route. A familiar destination.</h2><p>The address changes at the transport layer. Your page, form, and business API stay the same.</p></div><div class="learn-grid"><article><span>01</span><h3>Time creates the token</h3><p>The client and gateway use the same seed and time window to calculate an eight-character HMAC token.</p><code>HMAC(seed, floor(time / window))</code></article><article><span>02</span><h3>The gateway checks it</h3><p>Current and previous-window tokens pass. Missing, altered, future, and expired tokens get a 404 before the proxy runs.</p><code>current ✓ &nbsp; previous ✓ &nbsp; expired ✕</code></article><article><span>03</span><h3>The backend stays simple</h3><p>The gateway strips the token. Your service receives its original endpoint and processes the request normally.</p><code>/api/v1/{token}/checkout → /api/v1/checkout</code></article></div><details><summary>What does this protect against—and what does it not do?</summary><p>This demonstrates moving-target route obfuscation. It is not authentication or DDoS protection. Browser-held seeds can be extracted, and valid tokens can be replayed during their acceptance window. Production services still need TLS, authentication, authorization, rate limiting, and backend isolation. This local dashboard intentionally exposes test tokens, including future and expired ones; it does not disclose the seed. “Forwarded” means the proxy was invoked; “backend response” means an upstream HTTP response was received. Gateway time is measured on the server, not a network benchmark.</p></details></section>
+      <footer class="page-footer"><span class="footer-brand">flux.</span><span>Polymorphic Endpoint Mutation Gateway</span><span>Built for understanding. Powered by real requests.</span></footer>
+    </div>
+  </main>
+</body>
+</html>
